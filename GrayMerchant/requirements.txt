@@ -1,0 +1,11 @@
+celery==4.2.1
+coverage
+django>=1.11.19
+django-extensions
+djangorestframework==3.4.0
+pillow
+psycopg2==2.7.3.2
+redis
+requests
+
+-e git+ssh://git@github.com/baronvonvaderham/django-mtg-card-catalog@master#egg=django-mtg-card-catalog

@@ -37,10 +37,12 @@ DJANGO_AND_EXTERNAL_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'card_catalog',
 ]
 
 LOCAL_APPS = [
-    'gray_merchant.apps.GrayMerchantConfig',
+    'gray_merchant',
 ]
 
 INSTALLED_APPS = DJANGO_AND_EXTERNAL_APPS + LOCAL_APPS
@@ -55,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'GrayMerchant.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -74,14 +76,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'GrayMerchant.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # DATABASE CONFIG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bazaar',
+        'NAME': 'merchant',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
@@ -110,6 +112,19 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# Internationalization
+# https://docs.djangoproject.com/en/1.11/topics/i18n/
+
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
