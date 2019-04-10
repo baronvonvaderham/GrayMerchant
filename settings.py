@@ -43,6 +43,8 @@ DJANGO_AND_EXTERNAL_APPS = [
 
 LOCAL_APPS = [
     'gray_merchant',
+    'transactions',
+    'inventory',
 ]
 
 INSTALLED_APPS = DJANGO_AND_EXTERNAL_APPS + LOCAL_APPS
@@ -62,7 +64,7 @@ ROOT_URLCONF = 'urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, '../../templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -112,6 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'gray_merchant.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
