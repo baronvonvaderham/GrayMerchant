@@ -39,6 +39,8 @@ DJANGO_AND_EXTERNAL_APPS = [
     'django.contrib.staticfiles',
 
     'card_catalog',
+    'localflavor',
+    'phonenumber_field'
 ]
 
 LOCAL_APPS = [
