@@ -18,10 +18,11 @@ class InventoryItem(models.Model):
         ('DMG', 'Damaged')
     )
 
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)
     name = models.CharField(max_length=256, blank=True)
     description = models.TextField()
-    card = models.ForeignKey('card_catalog.Card', null=True, blank=True, on_delete=models.SET_NULL)
+    card = models.ForeignKey('card_catalog.Card', null=True, blank=True, on_delete=models.SET_NULL, db_index=True)
+    vendor = models.ForeignKey('gray_merchant.Vendor', null=True, blank=True, on_delete=models.SET_NULL, db_index=True)
     condition = models.CharField(max_length=3, choices=CONDITION_CHOICES, help_text="Card condition")
     grading_details = models.ForeignKey('GradingDetails',null=True, on_delete=models.SET_NULL)
     is_foil = models.BooleanField(default=False, help_text="Is the card foil?")
@@ -58,7 +59,7 @@ class GradingDetails(models.Model):
         ('PSA', 'Professional Sports Authentication')
     )
 
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)
     grading_service = models.CharField(max_length=32, choices=GRADING_SERVICES)
     serial_number = models.CharField(max_length=12)
     overall_grade = models.DecimalField(null=True, blank=True, decimal_places=1, max_digits=3)

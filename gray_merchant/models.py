@@ -19,9 +19,9 @@ class Vendor(models.Model):
     """
     Class to contain the Vendor (store) information
     """
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)
     name = models.CharField(max_length=128, unique=True)
-    email = models.EmailField()
+    email = models.EmailField(db_index=True)
     address = models.ForeignKey('Address', null=True, on_delete=models.SET_NULL)
     phone = PhoneNumberField()
 

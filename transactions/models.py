@@ -2,10 +2,11 @@ import datetime
 import uuid
 
 from django.db import models
+from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
 from card_catalog.models import CardPrice
-from gray_merchant.models import User
+from gray_merchant.models import User, Vendor
 from inventory.models import InventoryItem
 
 
@@ -13,7 +14,7 @@ class TransactionItem(models.Model):
     """
     Class to contain for all Transaction Items for all Transactions
     """
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)
     card = models.ForeignKey(InventoryItem, null=True, on_delete=models.SET_NULL)
     notes = models.TextField()
     captured_price = models.ForeignKey(CardPrice, null=True, on_delete=models.SET_NULL,
@@ -35,13 +36,15 @@ class BaseTransaction(models.Model):
     PAYMENT_TYPE_CHOICES = (
         ('cash', 'Cash'),
         ('store_credit', 'Store Credit'),
+        ('store_credit', 'Store Credit'),
         ('credit_card', 'Credit Card'),
         ('paypal', 'PayPal')
     )
 
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
-    timestamp = models.DateTimeField(default=datetime.datetime.now())
-    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)
+    timestamp = models.DateTimeField()
+    vendor = models.ForeignKey(Vendor, null=True, on_delete=models.SET_NULL, db_index=True)
+    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, db_index=True)
     payment_type = models.CharField(max_length=32, choices=PAYMENT_TYPE_CHOICES)
     transaction_total = models.FloatField(help_text=_("Total amount of transaction."))
     notes = models.TextField()
