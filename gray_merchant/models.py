@@ -4,8 +4,10 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from localflavor.us.models import USStateField, USPostalCodeField
+from localflavor.us.models import USStateField
 from phonenumber_field.modelfields import PhoneNumberField
+
+from .utils import ZipCodeValidator
 
 
 class User(AbstractUser):
@@ -24,6 +26,7 @@ class Vendor(models.Model):
     email = models.EmailField(db_index=True)
     address = models.ForeignKey('Address', null=True, on_delete=models.SET_NULL)
     phone = PhoneNumberField()
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = _('vendor')
@@ -75,8 +78,11 @@ class Address(models.Model):
     address_line_3 = models.CharField(max_length=128, null=True, blank=True)
     city = models.CharField(max_length=128)
     state = USStateField()
-    zip_code = USPostalCodeField()
+    zip_code = models.CharField(max_length=5, validators=[ZipCodeValidator])
 
     class Meta:
         verbose_name = _('address')
         verbose_name_plural = _('addresses')
+
+    def __str__(self):
+        return self.address_line_1

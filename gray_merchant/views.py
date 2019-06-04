@@ -1,14 +1,17 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 
+from .mixins import VendorPermissionMixin
 from inventory.models import InventoryItem
 
 
-class VendorInventoryView(ListView):
+class VendorInventoryView(LoginRequiredMixin, VendorPermissionMixin, ListView):
     """
     Generic ListView for Vendor basic inventory page
     """
-    queryset = InventoryItem.objects.filter(active=True, vendor=self.vendor_uuid)
+    model = InventoryItem
+    template_name = 'vendor_inventory.html'
 
-    def __init__(self, **kwargs):
-        self.vendor_uuid = kwargs.get('vendor_uuid')
-        super(VendorInventoryView, self).__init__(self)
+    def get_queryset(self):
+        qs = super(VendorInventoryView, self).get_queryset()
+        return qs.filter(vendor__id=self.kwargs['vendor_id'])
