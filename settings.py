@@ -40,13 +40,16 @@ DJANGO_AND_EXTERNAL_APPS = [
 
     'card_catalog',
     'localflavor',
-    'phonenumber_field'
+    'phonenumber_field',
+    'rest_framework',
+    'corsheaders',
 ]
 
 LOCAL_APPS = [
     'gray_merchant',
     'transactions',
     'inventory',
+    'api',
 ]
 
 INSTALLED_APPS = DJANGO_AND_EXTERNAL_APPS + LOCAL_APPS
@@ -54,6 +57,7 @@ INSTALLED_APPS = DJANGO_AND_EXTERNAL_APPS + LOCAL_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -81,7 +85,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'wsgi.application'
-
 
 # DATABASE CONFIG
 DATABASES = {
@@ -119,6 +122,22 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'gray_merchant.User'
 LOGIN_URL = '/login/'
+
+# REST Framework Auth Config
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8000',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
