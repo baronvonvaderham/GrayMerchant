@@ -15,6 +15,7 @@ class User(AbstractUser):
     Custom User model extending the django base model
     """
     phone = PhoneNumberField()
+    USERNAME_FIELD = 'email'
 
 
 class Vendor(models.Model):
