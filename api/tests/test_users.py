@@ -200,10 +200,13 @@ def test_update_user__profile(user_profile, user_address):
 
 
 @pytest.mark.django_db
-def test_get_user(user_profile):
+def test_get_user(user_profile, user_address):
     from gray_merchant.models import User
 
     user = User.objects.get(email='feynman@caltech.edu')
     response = client.get('/api/users/{}/'.format(user.id))
     assert response.status_code == status.HTTP_200_OK
-    assert json.loads(response.content).get('email') == 'feynman@caltech.edu'
+    data = json.loads(response.content)
+    assert data.get('email') == 'feynman@caltech.edu'
+    assert data.get('profile')
+    assert data.get('address')
