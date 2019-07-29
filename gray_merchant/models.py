@@ -59,9 +59,9 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='profile', primary_key=True
     )
-    dob = models.DateField(_('date of birth'), )
-    phone = PhoneNumberField(_('phone number'), blank=True, null=True)
-    photo = models.ImageField(_('photo'), upload_to='profile_images', blank=True, null=True)
+    dob = models.DateField(_('date of birth'), null=True, blank=True)
+    phone = PhoneNumberField(_('phone number'), null=True, blank=True)
+    photo = models.ImageField(_('photo'), upload_to='profile_images', null=True, blank=True)
 
     objects = models.Manager()
 
@@ -124,14 +124,13 @@ class UserAddress(models.Model):
     """
     Class to contain Addresses for Users
     """
-    user = models.OneToOneField(User, blank=True, null=True, on_delete=models.CASCADE,
-                                   related_name='address')
-    address_line_1 = models.CharField(_('address line 1'), max_length=128)
+    user = models.OneToOneField(User, blank=True, null=True, on_delete=models.CASCADE, related_name='address')
+    address_line_1 = models.CharField(_('address line 1'), max_length=128, null=True, blank=True)
     address_line_2 = models.CharField(_('address line 2'), max_length=128, null=True, blank=True)
     address_line_3 = models.CharField(_('address line 3'), max_length=128, null=True, blank=True)
-    city = models.CharField(_('city'), max_length=128)
-    state = USStateField(_('state'))
-    zip_code = models.CharField(_('zip code'), max_length=5, validators=[ZipCodeValidator])\
+    city = models.CharField(_('city'), max_length=128, null=True, blank=True)
+    state = USStateField(_('state'), null=True, blank=True)
+    zip_code = models.CharField(_('zip code'), max_length=5, validators=[ZipCodeValidator], null=True, blank=True)
 
     objects = models.Manager()
 
