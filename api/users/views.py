@@ -1,6 +1,6 @@
-from rest_framework import viewsets, permissions, mixins
+from rest_framework import viewsets, permissions
 
-from api.serializers import UserSerializer
+from api.users.serializers import UserSerializer
 from gray_merchant.models import User
 
 
